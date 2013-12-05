@@ -5,4 +5,8 @@ php:
   - 5.3
   - 5.4
 
-script: phpunit --coverage-text -c ./tests/phpunit.xml
+before_script:
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install
+
+script: ./vendor/bin/phpunit --coverage-text
