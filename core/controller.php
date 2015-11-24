@@ -3,7 +3,9 @@ class Controller
 {
     public $name;           // コントローラ名
     public $action;         // アクション名
-    public $view;           // ビュー
+
+    /** @var View $view */
+    public $view;           // ビュークラスのインスタンス
 
     public $default_view_class = 'View';     // デフォルトのビュークラス名
 
@@ -33,7 +35,7 @@ class Controller
         if (!method_exists($this, '__call')) {
             if (!method_exists($this, $this->action)) {
                 // アクションがコントローラに存在しないとき
-                throw new DCException('action does not exist');
+                throw new DCException(sprintf('Action "%s::%s()" does not exist', get_class($this), $this->action));
             }
             $method = new ReflectionMethod($this, $this->action);
             if (!$method->isPublic()) {
